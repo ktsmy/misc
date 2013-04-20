@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>永遠の17歳カウンター</title>
+</head>
+<body>
+<script type="text/javascript">
+<!--
+function calc_forever17() {
+    // 入力された誕生日を取得
+    var birth_year = document.getElementById("year").value;
+    var birth_month = document.getElementById("month").value;
+    var birth_day = document.getElementById("day").value;
+
+    var output;
+
+    // 入力された日付をチェック
+    var ret = checkDate(birth_year, birth_month, birth_day);
+    if (ret == -1) {
+        // 日付が不正な値の場合、メッセージを出して終了
+        output = "誕生日がヘンだよ！！";
+        document.getElementById("output").innerHTML = output;
+        return;
+    } else if (ret == -2) {
+        // 日付が明日以降の場合、メッセージを出して終了
+        output = "まだ生まれてないじゃんｗ"
+        document.getElementById("output").innerHTML = output;
+        return;
+    }
+
+    // 今日の日付を取得
+    var today = new Date();
+    var today_year = today.getFullYear();
+    var today_month = today.getMonth() + 1;
+    var today_day = today.getDate();
+
+    // 実年齢を計算
+    var age_true;
+    if (today_year == birth_year) {
+        age_true = 0;
+    } else if (today_month < birth_month || (today_month == birth_month && today_day < birth_day)) {
+        // 今年の誕生日はまだ
+        age_true = today_year - birth_year - 1;
+    } else {
+        // 今年の誕生日を迎えた
+        age_true = today_year - birth_year;
+    }
+    var output = age_true + "歳";
+
+    // 永遠の17歳（とnヶ月）
+    var age17_month;
+    if (today_day < birth_day) {
+        age17_month = (age_true - 17) * 12 + today_month - birth_month - 1;
+    } else {
+        age17_month = (age_true - 17) * 12 + today_month - birth_month;
+    }
+    output += "<br/>17歳と" + age17_month + "ヶ月"
+
+    // 永遠の17歳（とn日）
+    // 誕生日がうるう日の場合は、17年後の誕生日を2/28として計算する。
+    var birthday17;
+    if (leapDay(birth_year, birth_month, birth_day)) {
+        birthday17 = new Date(Number(birth_year) + 17, birth_month - 1, birth_day - 1);
+    } else {
+        birthday17 = new Date(Number(birth_year) + 17, birth_month - 1, birth_day);
+    }
+    var age17_day = Math.floor((today.getTime() - birthday17.getTime()) / 86400000);
+    output += "<br/>17歳と" + age17_day + "日"
+
+    // 永遠の17歳（n進法）
+    if (age_true >= 15) {
+        var age17_base = age_true - 7;
+        output += "<br/>17歳（" + age17_base + "進数）";
+    }
+
+    document.getElementById("output").innerHTML = output;
+}
+
+function checkDate(year, month, day) {
+    // 日付が不正な値の場合は-1を返す
+    var endday = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    if (leapYear(year)) {
+        endday[2]++;
+    }
+    if (month < 1 || month > 12 || day > endday[month]) {
+        return -1;
+    }
+    // 今日より先の日付は-2を返す
+    var today = new Date();
+    var date = new Date(year, month - 1, day);
+    if (today.getTime() < date.getTime()) {
+        return -2;
+    }
+
+    // 正常なら0を返す
+    return 0;
+}
+
+function leapYear(year) {
+    if (year % 400 == 0 || (year % 4 == 0 && year % 100 > 0)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function leapDay(year, month, day) {
+    return leapYear(year) && month == 2 && day == 29;
+}
+
+// -->
+</script>
+
+<div id="birthday">
+西暦
+<input type="text" id="year"/>
+年
+<input type="text" id="month"/>
+月
+<input type="text" id="day"/>
+日</br>
+<input type="submit" value="計算" onclick="calc_forever17()">
+
+</div>
+
+<div id="output">
+誕生日を入力してください。
+</div>
+
+</body>
+</html>

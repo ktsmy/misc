@@ -1,0 +1,41 @@
+<html>
+<head>
+    <title>インクリメンタルサーチ</title>
+</head>
+
+<body onload="search('test_select', '')">
+
+<script type="text/javascript">
+<!--
+    function search(select_id, pattern) {
+        var array = ['hoge', 'piyo', 'fuga'];
+
+        var select_elm = document.getElementById(select_id);
+        //while (select_elm.lastChild) {
+        //    select_elm.removeChild(select_elm.lastChild);
+        //}
+        for (var ii = select_elm.options.length - 1; ii >= 0; ii--) {
+            select_elm.options[ii] = null;
+        }
+
+        var regex = new RegExp(pattern, "i");
+        jj = 0;
+        for (var ii = 0; ii < array.length; ii++) {
+            if (array[ii].match(regex)) {
+                select_elm.options[jj] = new Option(array[ii], array[ii]);
+                jj++;
+            }
+        }
+    }
+-->
+</script>
+<form>
+<select id="test_select" size="5" style="width:200px">
+<select>
+<input id="test_input" type="text" onkeyup="search('test_select', this.value)">
+</form>
+
+
+
+</body>
+</html>
